@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #0F1B33; font-family: Arial, sans-serif; display: flex; flex-direction: column;
+}
+.header { margin: 22pt 48pt 0 48pt; }
+.accent-bar { width: 50pt; height: 3pt; background: #E76F51; margin: 0 0 8pt 0; }
+h2 { color: #FFFFFF; font-size: 24pt; margin: 0; }
+.diagram { margin: 10pt 48pt 0 48pt; background: #162344; padding: 16pt 20pt; border-radius: 4pt; }
+.row { display: flex; gap: 10pt; align-items: center; margin-bottom: 8pt; }
+.block { background: #1A3050; padding: 10pt 14pt; text-align: center; flex: 1; border-radius: 4pt; }
+.block h3 { color: #2EC4B6; font-size: 11pt; margin: 0; }
+.block p { color: #8899AA; font-size: 9pt; margin: 2pt 0 0 0; }
+.arrow { color: #E76F51; font-size: 20pt; margin: 0; }
+.block2 { background: #2A1A30; padding: 10pt 14pt; text-align: center; flex: 1; border-radius: 4pt; border: 2pt solid #E76F51; }
+.block2 h3 { color: #E76F51; font-size: 11pt; margin: 0; }
+.block2 p { color: #B0C0D0; font-size: 9pt; margin: 2pt 0 0 0; }
+.specs { margin: 8pt 48pt; display: flex; gap: 12pt; }
+.spec { flex: 1; background: #1A3050; padding: 10pt 12pt; }
+.spec h3 { color: #2EC4B6; font-size: 11pt; margin: 0 0 4pt 0; }
+.spec p { color: #B0C0D0; font-size: 9pt; margin: 0 0 2pt 0; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="accent-bar"></div>
+  <h2>模型架构：CRNN（CNN + GRU）</h2>
+</div>
+<div class="diagram">
+  <div class="row">
+    <div class="block"><h3>输入</h3><p>Mel 频谱<br/>1 × 128 × 54</p></div>
+    <p class="arrow">→</p>
+    <div class="block"><h3>Conv1</h3><p>1→32 ch<br/>3×3 / BN / ReLU<br/>2× Freq Pool</p></div>
+    <p class="arrow">→</p>
+    <div class="block"><h3>Conv2</h3><p>32→64 ch<br/>3×3 / BN / ReLU<br/>2× Freq Pool</p></div>
+    <p class="arrow">→</p>
+    <div class="block"><h3>Conv3</h3><p>64→128 ch<br/>3×3 / BN / ReLU<br/>2× Freq Pool</p></div>
+    <p class="arrow">→</p>
+    <div class="block"><h3>Conv4</h3><p>128→128 ch<br/>3×3 / BN / ReLU</p></div>
+  </div>
+  <div class="row" style="margin-top: 10pt;">
+    <div class="block"><h3>Freq Collapse</h3><p>AdaptiveAvgPool<br/>128×(1×54)</p></div>
+    <p class="arrow">→</p>
+    <div class="block2"><h3>Bi-GRU ×2</h3><p>128in → 128hid<br/>bidirectional<br/>54 timesteps</p></div>
+    <p class="arrow">→</p>
+    <div class="block"><h3>Time MaxPool</h3><p>max over time<br/>256-dim</p></div>
+    <p class="arrow">→</p>
+    <div class="block"><h3>Classifier</h3><p>256→64→8<br/>Dropout 0.3</p></div>
+    <p class="arrow">→</p>
+    <div class="block2"><h3>输出</h3><p>8 类 logits<br/>Sigmoid → 多热</p></div>
+  </div>
+</div>
+<div class="specs">
+  <div class="spec"><h3>总参数</h3><p>752,168</p></div>
+  <div class="spec"><h3>损失函数</h3><p>BCEWithLogitsLoss（多标签）</p></div>
+  <div class="spec"><h3>优化器</h3><p>Adam / LR=1e-3 / Weight Decay=1e-4</p></div>
+  <div class="spec"><h3>调度器</h3><p>ReduceLROnPlateau / patience=5 / factor=0.5</p></div>
+  <div class="spec"><h3>早停</h3><p>Patience=12 epochs / 监控 val macro F1</p></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #0F1B33; font-family: Arial, sans-serif; display: flex; flex-direction: column;
+}
+.header { margin: 24pt 48pt 0 48pt; }
+.accent-bar { width: 50pt; height: 3pt; background: #2EC4B6; margin: 0 0 8pt 0; }
+h2 { color: #FFFFFF; font-size: 24pt; margin: 0; }
+.row { display: flex; margin: 14pt 48pt; gap: 16pt; }
+.col { flex: 1; }
+.layer { background: #162344; padding: 12pt 14pt; margin-bottom: 8pt; border-radius: 4pt; border-left: 3pt solid #2EC4B6; }
+.layer h3 { color: #2EC4B6; font-size: 12pt; margin: 0 0 4pt 0; }
+.layer p { color: #B0C0D0; font-size: 9pt; margin: 0; line-height: 1.5; }
+.layer .why { color: #E76F51; font-size: 9pt; margin: 4pt 0 0 0; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="accent-bar"></div>
+  <h2>每一层做了什么 & 为什么这样设计</h2>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="layer"><h3>Mel 频谱输入</h3><p>原始 1.2s 音频 → 短时傅里叶变换 → 128 个 Mel 频带 × 54 时间帧。Mel 尺度模拟人耳听觉，压缩高频维度。</p><p class="why">频率维 128 足够覆盖车载告警（300-8000Hz），时间维 54 帧给 GRU 足够步长</p></div>
+    <div class="layer"><h3>Conv1-3（频率池化）</h3><p>3 层卷积，每层后接 2× 频率下采样。通道数 1→32→64→128。只压频率维，保留时间维。</p><p class="why">频率维从 128 → 64 → 32 → 16，时间维始终保留 → 给 GRU 提供完整的时序序列</p></div>
+    <div class="layer"><h3>Conv4（无池化）</h3><p>128 ch，3×3 卷积，无池化。保持 128×16×54 输出。</p><p class="why">最后一层卷积精炼特征，不再降维</p></div>
+    <div class="layer"><h3>AdaptiveAvgPool2d((1,None))</h3><p>频率维全局平均池化到 1。输出 128×1×54 → Reshape 为 54×128。</p><p class="why">将每个时间帧的频域信息压缩为一个 128 维特征向量</p></div>
+  </div>
+  <div class="col">
+    <div class="layer"><h3>双向 GRU ×2（核心）</h3><p>输入 54 步 × 128 维。128 隐藏单元，2 层，双向 → 输出 256 维/步。Dropout 0.3。</p><p class="why">前向 GRU 学"响→停"关系，后向 GRU 学"停→响"关系。双向拼接 = 完整上下文。2 层 = 更深层次时序表征</p></div>
+    <div class="layer"><h3>MaxPool over Time</h3><p>对 GRU 输出的 54 个时间步取最大值。54×256 → 256。</p><p class="why">取最大激活值，确保只要有任一帧触发，分类头就能响应。比取平均更适合稀疏事件检测</p></div>
+    <div class="layer"><h3>分类头</h3><p>256 → 64 → 8（Dropout 0.3）。8 个 Sigmoid 独立输出。</p><p class="why">独立 Sigmoid = 多标签：窗口内可以同时输出 ACC=1, FCW=1</p></div>
+    <div class="layer"><h3>为什么不用 Transformer</h3><p>自注意力在 54 帧短序列上收益小，数据量不够时容易过拟合。GRU 逐步记忆恰好匹配"先响再停"的局部节奏。</p></div>
+  </div>
+</div>
+</body>
+</html>

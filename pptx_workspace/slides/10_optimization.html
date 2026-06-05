@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #0F1B33; font-family: Arial, sans-serif; display: flex; flex-direction: column;
+}
+.header { margin: 22pt 48pt 0 48pt; }
+.accent-bar { width: 50pt; height: 3pt; background: #E76F51; margin: 0 0 8pt 0; }
+h2 { color: #FFFFFF; font-size: 24pt; margin: 0; }
+.timeline { margin: 10pt 48pt; }
+.phase { background: #162344; padding: 10pt 14pt; margin-bottom: 6pt; border-radius: 4pt; display: flex; gap: 14pt; align-items: center; }
+.phase .num { color: #2EC4B6; font-size: 18pt; font-weight: bold; min-width: 30pt; text-align: center; }
+.phase .info { flex: 1; }
+.phase h3 { color: #FFFFFF; font-size: 12pt; margin: 0 0 2pt 0; }
+.phase p { color: #8899AA; font-size: 9pt; margin: 0; line-height: 1.4; }
+.phase .result { color: #E76F51; font-size: 9pt; margin: 0; }
+.lessons { margin: 8pt 48pt; background: #1A3050; padding: 10pt 14pt; }
+.lessons h3 { color: #2EC4B6; font-size: 12pt; margin: 0 0 4pt 0; }
+.lessons p { color: #B0C0D0; font-size: 10pt; margin: 0; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="accent-bar"></div>
+  <h2>调优历程 & 关键发现</h2>
+</div>
+<div class="timeline">
+  <div class="phase">
+    <p class="num">1</p>
+    <div class="info"><h3>CNN 0.5s 窗口（初始版本）</h3><p>纯 CNN + GlobalAvgPool2d，短窗口匹配最短告警。Caution2 只看到半周期。</p><p class="result">结果：Caution2 F1=0.59，分不清响停节奏</p></div>
+  </div>
+  <div class="phase">
+    <p class="num">2</p>
+    <div class="info"><h3>CRNN 2.0s 窗口（节奏建模尝试）</h3><p>加入双向 GRU 学时序。窗口加大到 2s 覆盖长周期。训练推理周期严重拖慢。</p><p class="result">结果：F1 提高但 real-val=0/5，合成过拟合</p></div>
+  </div>
+  <div class="phase">
+    <p class="num">3</p>
+    <div class="info"><h3>模板铺放增强（关键突破）</h3><p>抛弃随机裁剪+静音填充。完整告警周期作为原子，随机位移铺入窗口。保存自然节奏。</p><p class="result">结果：Caution2 F1 0.59→0.89，real-val 显著改善</p></div>
+  </div>
+  <div class="phase">
+    <p class="num">4</p>
+    <div class="info"><h3>负样本调优 + 真实验证</h3><p>NO_ALARM 30%→20%（防止过保守）。Caution1 pos_weight=1.5。加入真实验证集。</p><p class="result">结果：FCW/FEB 误报消除，real-val=6/7。证明验证集虚高问题存在</p></div>
+  </div>
+  <div class="phase">
+    <p class="num">5</p>
+    <div class="info"><h3>窗口优化 + _is_continuous 修复</h3><p>窗口定为 1.2s（Caution2 1s+缓冲）。连续判据从全局比例改为最长连续运行≥3周期。</p><p class="result">结果：FEB 1次→12次，ACC 1次→10次。连续告警计数修复</p></div>
+  </div>
+</div>
+<div class="lessons">
+  <h3>核心教训</h3>
+  <p>合成验证 F1 虚高 ≠ 真实效果好。真实验证集是关键。  |  推理阈值 0.6 最优，低置信度误报可过滤，高置信度误报需从训练解决。  |  完整周期 > 随机裁剪：破坏告警天然节奏的增强方式适得其反。  |  微调支持添加新类，但若旧模型有强偏见则需从头训。</p>
+</div>
+</body>
+</html>

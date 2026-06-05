@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #0F1B33; font-family: Arial, sans-serif; display: flex; flex-direction: column;
+}
+.header { margin: 24pt 48pt 0 48pt; }
+.accent-bar { width: 50pt; height: 3pt; background: #E76F51; margin: 0 0 8pt 0; }
+h2 { color: #FFFFFF; font-size: 24pt; margin: 0; }
+.row { display: flex; margin: 12pt 48pt; gap: 16pt; }
+.col { flex: 1; }
+.section { margin-bottom: 10pt; }
+.section h3 { color: #2EC4B6; font-size: 13pt; margin: 0 0 4pt 0; }
+.section p { color: #B0C0D0; font-size: 10pt; margin: 0 0 2pt 0; line-height: 1.5; }
+.table { margin-top: 6pt; background: #162344; padding: 10pt 14pt; border-radius: 4pt; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="accent-bar"></div>
+  <h2>训练策略 & 调优历程</h2>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="section">
+      <h3>训练配置</h3>
+      <p>窗口：1.2s（覆盖 Caution2 完整 1s 周期 + 0.2s 缓冲）</p>
+      <p>每 epoch：4000 合成样本 / batch=64</p>
+      <p>验证集：1000 合成样本 + 真实验证集（不参与训练）</p>
+      <p>早停监控：验证 macro F1 / patience=12</p>
+      <p>模型保存：每次训练自动新建 timestamp 文件夹 + 旧模型不覆盖</p>
+    </div>
+    <div class="section">
+      <h3>微调支持</h3>
+      <p>设置 FINETUNE_FROM 指向旧模型，骨干权重复用</p>
+      <p>分类头自动替换匹配新类数，LR 降至 3e-4</p>
+      <p>可选 FREEZE_BACKBONE=True 冻结骨干，只训分类头</p>
+    </div>
+    <div class="table">
+      <h3>Per-Class Loss 加权</h3>
+      <p style="color: #B0C0D0; font-size: 10pt; line-height: 1.5;">Caution1 在负样本过多时被抑制 → pos_weight=1.5 提高其损失贡献，防止连续纯音类被误杀</p>
+    </div>
+  </div>
+  <div class="col">
+    <div class="section">
+      <h3>数据增强比例演变</h3>
+    </div>
+    <div class="table">
+      <p style="color: #8899AA; font-size: 9pt; line-height: 1.8;">
+        <b style="color: #2EC4B6;">初始：</b>NO_ALARM=15%  SINGLE=30%  DUAL=35%  TRIPLE=20%<br/>
+        <b style="color: #E76F51;">问题：</b>75% 样本是多告警重叠，模型过度自信<br/>
+        <b style="color: #2EC4B6;">优化后：</b>NO_ALARM=20%  SINGLE=60%  DUAL=20%  TRIPLE=0%<br/>
+      </p>
+    </div>
+    <div class="section" style="margin-top: 10pt;">
+      <h3>推理阈值调优</h3>
+    </div>
+    <div class="table">
+      <p style="color: #8899AA; font-size: 9pt; line-height: 1.8;">
+        0.4→9 误报  |  0.5→9 误报  |  <b style="color: #2EC4B6;">0.6→3 误报 ✓</b>  |  0.7→8 误报  |  0.8→8 误报  |  0.9→6 误报<br/>
+        Caution1 低置信度误报（conf=0.55）在 0.6 被清除<br/>
+        FCW/FEB 高置信度误报（0.88-1.0）阈值杀不掉 → 需训练层面解决
+      </p>
+    </div>
+    <div class="section" style="margin-top: 10pt;">
+      <h3>最终最佳配置</h3>
+      <p>CRNN / 1.2s 窗口 / 0.1s 步长 / 0.6 阈值 / 负样本 20% / 单告警 60% / Caution1 权重 ×1.5</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

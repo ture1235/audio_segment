@@ -1,0 +1,273 @@
+(audio_detector_clean) dutrue@dutrue:~/projects/py_projects/audio_segment$ python -m src.infer
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/11.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 0  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+No alarms detected.
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/20.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 0  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+No alarms detected.
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/13.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 1  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+┌─ Caution1  ×1 rings  (cycle: 500ms)
+└─ ring #1:  00:18.900  conf=0.968
+
+──────────────────────────────────────────────────
+Class            Rings            Time range
+──────────────────────────────────────────────────
+Caution1             1  00:18.900 – 00:18.900
+──────────────────────────────────────────────────
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/9.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 0  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+No alarms detected.
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/24.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 0  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+No alarms detected.
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/14.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 1  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+┌─ FEB  ×1 rings  (cycle: 720ms)
+└─ ring #1:  00:06.800  conf=0.785
+
+──────────────────────────────────────────────────
+Class            Rings            Time range
+──────────────────────────────────────────────────
+FEB                  1  00:06.800 – 00:06.800
+──────────────────────────────────────────────────
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/30.wav
+Duration: 2.7s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 1  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+┌─ Caution1  ×1 rings  (cycle: 500ms)
+└─ ring #1:  00:01.500  conf=0.871
+
+──────────────────────────────────────────────────
+Class            Rings            Time range
+──────────────────────────────────────────────────
+Caution1             1  00:01.500 – 00:01.500
+──────────────────────────────────────────────────
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/0.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 0  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+No alarms detected.
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/5.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 0  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+No alarms detected.
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/16.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 2  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+┌─ Caution1  ×2 rings  (cycle: 500ms)
+├─ ring #1:  00:14.000  conf=0.976
+└─ ring #2:  00:14.800  conf=0.983
+
+──────────────────────────────────────────────────
+Class            Rings            Time range
+──────────────────────────────────────────────────
+Caution1             2  00:14.000 – 00:14.800
+──────────────────────────────────────────────────
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/22.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 0  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+No alarms detected.
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/27.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 1  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+┌─ Caution1  ×1 rings  (cycle: 500ms)
+└─ ring #1:  00:03.500  conf=0.997
+
+──────────────────────────────────────────────────
+Class            Rings            Time range
+──────────────────────────────────────────────────
+Caution1             1  00:03.500 – 00:03.500
+──────────────────────────────────────────────────
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/6.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 10  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+┌─ Caution2  ×5 rings  (cycle: 1000ms) (approx, continuous)
+├─ ring #1:  00:11.000  conf=0.949
+├─ ring #2:  00:12.000  conf=0.997
+├─ ring #3:  00:13.000  conf=0.993
+├─ ring #4:  00:14.000  conf=0.994
+└─ ring #5:  00:15.000  conf=0.997
+
+┌─ FEB  ×5 rings  (cycle: 720ms) (approx, continuous)
+├─ ring #1:  00:15.200  conf=0.829
+├─ ring #2:  00:15.920  conf=0.999
+├─ ring #3:  00:16.640  conf=0.998
+├─ ring #4:  00:17.360  conf=0.999
+└─ ring #5:  00:18.080  conf=0.999
+
+──────────────────────────────────────────────────
+Class            Rings            Time range
+──────────────────────────────────────────────────
+Caution2             5  00:11.000 – 00:15.000
+FEB                  5  00:15.200 – 00:18.080
+──────────────────────────────────────────────────
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/high_quality.wav
+Duration: 10.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 11  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+┌─ ACC  ×5 rings  (cycle: 750ms) (approx, continuous)
+├─ ring #1:  00:02.200  conf=0.646
+├─ ring #2:  00:02.950  conf=0.999
+├─ ring #3:  00:03.700  conf=0.998
+├─ ring #4:  00:04.450  conf=0.999
+└─ ring #5:  00:05.200  conf=0.982
+
+┌─ Caution1  ×2 rings  (cycle: 500ms)
+├─ ring #1:  00:01.300  conf=0.998
+└─ ring #2:  00:08.400  conf=0.995
+
+┌─ FCW  ×4 rings  (cycle: 750ms) (approx, continuous)
+├─ ring #1:  00:05.100  conf=0.676
+├─ ring #2:  00:05.850  conf=1.000
+├─ ring #3:  00:06.600  conf=1.000
+└─ ring #4:  00:07.350  conf=1.000
+
+──────────────────────────────────────────────────
+Class            Rings            Time range
+──────────────────────────────────────────────────
+ACC                  5  00:02.200 – 00:05.200
+Caution1             2  00:01.300 – 00:08.400
+FCW                  4  00:05.100 – 00:07.350
+──────────────────────────────────────────────────
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/8.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 9  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+┌─ Caution1  ×1 rings  (cycle: 500ms)
+└─ ring #1:  00:09.900  conf=0.669
+
+┌─ FEB  ×8 rings  (cycle: 720ms) (approx, continuous)
+├─ ring #1:  00:07.300  conf=0.998
+├─ ring #2:  00:08.020  conf=0.999
+├─ ring #3:  00:08.740  conf=0.992
+├─ ring #4:  00:09.460  conf=0.963
+├─ ring #5:  00:10.180  conf=0.999
+├─ ring #6:  00:10.900  conf=0.998
+├─ ring #7:  00:11.620  conf=0.996
+└─ ring #8:  00:12.340  conf=0.998
+
+──────────────────────────────────────────────────
+Class            Rings            Time range
+──────────────────────────────────────────────────
+Caution1             1  00:09.900 – 00:09.900
+FEB                  8  00:07.300 – 00:12.340
+──────────────────────────────────────────────────
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/7.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 1  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+┌─ FEB  ×1 rings  (cycle: 720ms)
+└─ ring #1:  00:02.900  conf=0.999
+
+──────────────────────────────────────────────────
+Class            Rings            Time range
+──────────────────────────────────────────────────
+FEB                  1  00:02.900 – 00:02.900
+──────────────────────────────────────────────────
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/15.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 0  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+No alarms detected.
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/17.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 0  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+No alarms detected.
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/3.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 0  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+No alarms detected.
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/4.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 8  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+┌─ Caution2  ×2 rings  (cycle: 1000ms)
+├─ ring #1:  00:02.500  conf=0.997
+└─ ring #2:  00:07.500  conf=0.997
+
+┌─ FEB  ×6 rings  (cycle: 720ms)
+├─ ring #1:  00:01.800  conf=0.961
+├─ ring #2:  00:03.200  conf=0.897
+├─ ring #3:  00:03.800  conf=0.970
+├─ ring #4:  00:08.000  conf=0.971
+├─ ring #5:  00:08.800  conf=0.972
+└─ ring #6:  00:11.700  conf=0.975
+
+──────────────────────────────────────────────────
+Class            Rings            Time range
+──────────────────────────────────────────────────
+Caution2             2  00:02.500 – 00:07.500
+FEB                  6  00:01.800 – 00:11.700
+──────────────────────────────────────────────────
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/23.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 0  |  Threshold: 0.6  |  Min spacing: 300.0ms
+
+No alarms detected.
+Model:    /home/dutrue/projects/py_projects/audio_segment/models/best_model.pt
+Audio:    ./test_wav/10.wav
+Duration: 20.0s  Window: 1.0s  Stride: 0.1s
+
+Rings detected: 0  |  Threshold: 0.6  |  Min spacing: 300.0ms
