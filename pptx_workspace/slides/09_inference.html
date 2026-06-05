@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #0F1B33; font-family: Arial, sans-serif; display: flex; flex-direction: column;
+}
+.header { margin: 24pt 48pt 0 48pt; }
+.accent-bar { width: 50pt; height: 3pt; background: #2EC4B6; margin: 0 0 8pt 0; }
+h2 { color: #FFFFFF; font-size: 24pt; margin: 0; }
+.flow { display: flex; margin: 10pt 48pt; gap: 8pt; align-items: flex-start; }
+.step { flex: 1; background: #162344; padding: 10pt 12pt; border-radius: 4pt; }
+.step h3 { color: #2EC4B6; font-size: 11pt; margin: 0 0 4pt 0; }
+.step p { color: #B0C0D0; font-size: 9pt; margin: 0; line-height: 1.4; }
+.arrow { color: #E76F51; font-size: 22pt; margin: 12pt 0 0 0; }
+.bottom { margin: 8pt 48pt; display: flex; gap: 16pt; }
+.box { flex: 1; background: #1A3050; padding: 10pt 14pt; }
+.box h3 { color: #E76F51; font-size: 11pt; margin: 0 0 4pt 0; }
+.box p { color: #B0C0D0; font-size: 9pt; margin: 0 0 2pt 0; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="accent-bar"></div>
+  <h2>推理管线——从音频到响铃时间点</h2>
+</div>
+<div class="flow">
+  <div class="step"><h3>1. 加载模型</h3><p>自动检测 CNN/CRNN 类型<br/>加载 alarm_names<br/>CPU 推理</p></div>
+  <p class="arrow">→</p>
+  <div class="step"><h3>2. 滑动窗口</h3><p>1.2s 窗口 / 0.1s 步长<br/>每窗口 → mel → 模型<br/>→ 8 类概率向量</p></div>
+  <p class="arrow">→</p>
+  <div class="step"><h3>3. 概率序列</h3><p>得到每类 prob(t)<br/>0.1s 分辨率<br/>连续概率曲线</p></div>
+  <p class="arrow">→</p>
+  <div class="step"><h3>4. 模式判断</h3><p>连续？最长活跃段 ≥ 3 周期<br/>离散？找峰值（find_peaks）</p></div>
+  <p class="arrow">→</p>
+  <div class="step"><h3>5. 响铃输出</h3><p>离散：每峰=1次响<br/>连续：按周期步进<br/>时间 + 置信度 + 数量</p></div>
+</div>
+<div class="bottom">
+  <div class="box">
+    <h3>连续模式 (_detect_continuous_rings)</h3>
+    <p>告警持续响（Dooropen 连响 7s）→ 概率平台</p>
+    <p>从首次检测开始，按 cycle_duration 步进</p>
+    <p>输出近似数量（±1-2 次，受窗口拖尾影响）</p>
+    <p>标记为 "(approx, continuous)"</p>
+  </div>
+  <div class="box">
+    <h3>离散模式 (_detect_discrete_rings)</h3>
+    <p>告警断续响（Caution2 500ms 响+停）→ 概率峰</p>
+    <p>scipy.signal.find_peaks(height=0.6, distance=3, prominence=0.03)</p>
+    <p>每个有效的概率局部极大值 = 一次响铃</p>
+    <p>不允许比 min_ring_spacing 更近的两个峰</p>
+  </div>
+  <div class="box">
+    <h3>可调参数</h3>
+    <p>--threshold：置信度门槛（默认 0.6）</p>
+    <p>--min-ring-spacing：最小峰间距 ms（默认 300）</p>
+    <p>--model：指定模型路径</p>
+    <p>--min-volume：音量过滤已回退</p>
+  </div>
+</div>
+</body>
+</html>

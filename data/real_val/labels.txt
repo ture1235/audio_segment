@@ -1,0 +1,14 @@
+# Real validation labels
+# Format: filename.wav=CLASS1,CLASS2,...
+# One file per line.  Lines starting with # are ignored.
+# These files should be placed in data/real_val/ alongside this label file.
+
+test_01.wav=Caution1,Caution2
+testdooropen.wav=Dooropen
+testfcw.wav=FCW
+test_conbine.wav=FCW,FEB
+c1_c2.wav=Caution1,Caution2
+testacc.wav=ACC
+testfeb.wav=FEB
+6.wav=Caution2
+8.wav=

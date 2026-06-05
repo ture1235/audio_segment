@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #0F1B33; font-family: Arial, sans-serif; display: flex; flex-direction: column;
+}
+.header { margin: 28pt 48pt 0 48pt; }
+.accent-bar { width: 50pt; height: 3pt; background: #E76F51; margin: 0 0 10pt 0; }
+h2 { color: #FFFFFF; font-size: 26pt; margin: 0; }
+.row { display: flex; margin: 18pt 48pt; gap: 20pt; }
+.col { flex: 1; }
+.challenge { background: #162344; padding: 14pt 16pt; margin-bottom: 10pt; border-radius: 4pt; }
+.challenge h3 { color: #E76F51; font-size: 13pt; margin: 0 0 4pt 0; }
+.challenge .desc { color: #B0C0D0; font-size: 10pt; margin: 0 0 6pt 0; line-height: 1.5; }
+.solution { color: #2EC4B6; font-size: 10pt; margin: 0; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="accent-bar"></div>
+  <h2>核心挑战与解决方案</h2>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="challenge">
+      <h3>挑战 1：极少量训练数据</h3>
+      <p class="desc">每个告警只有 1 个纯净单周期文件（0.45-1.0s），无大规模标注数据集</p>
+      <p class="solution">模板铺放增强：完整周期作为原子，随机位移铺入窗口，加噪声合成无限训练样本</p>
+    </div>
+    <div class="challenge">
+      <h3>挑战 2：多告警重叠</h3>
+      <p class="desc">实际场景中 2-3 个告警可能同时响，频谱混合后难以分离</p>
+      <p class="solution">多热标签 + BCEWithLogitsLoss：每个类独立 sigmoid，允许同时输出多个 1</p>
+    </div>
+    <div class="challenge">
+      <h3>挑战 3：人声/TTS 干扰</h3>
+      <p class="desc">车内 TTS 语音播报可能被误判为告警</p>
+      <p class="solution">纯 TTS 录音放入噪声池，作为负样本训练；告警+TTS 叠加录音放入告警素材库</p>
+    </div>
+  </div>
+  <div class="col">
+    <div class="challenge">
+      <h3>挑战 4：节奏差异 vs 频谱相似</h3>
+      <p class="desc">ACC/FCW 同为脉冲型（频率不同），Caution1/Caution2 响的部分频谱相同</p>
+      <p class="solution">CRNN 架构：CNN 提取频谱特征 + GRU 建模时间序列，学到"响-停-响"节奏</p>
+    </div>
+    <div class="challenge">
+      <h3>挑战 5：合成训练 ≠ 真实推理</h3>
+      <p class="desc">合成噪声训练的模型在真实录音上水土不服，验证集虚高</p>
+      <p class="solution">真实数据验证集（real_val）+ 每个 epoch 自动评估 + 真实验证结果可视化</p>
+    </div>
+    <div class="challenge">
+      <h3>挑战 6：未知重复次数 + 顺序</h3>
+      <p class="desc">每个待检测音频包含的告警种类、次数、顺序均不确定</p>
+      <p class="solution">滑动窗口 + 概率峰检测 + 连续模式自动切换：连续告警按周期推算次数</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

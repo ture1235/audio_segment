@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #0F1B33; font-family: Arial, sans-serif; display: flex; flex-direction: column;
+}
+.header { margin: 28pt 48pt 0 48pt; }
+.accent-bar { width: 50pt; height: 3pt; background: #2EC4B6; margin: 0 0 10pt 0; }
+h2 { color: #FFFFFF; font-size: 26pt; margin: 0; }
+.grid { display: flex; flex-wrap: wrap; margin: 16pt 48pt; gap: 10pt; }
+.item { width: 200pt; background: #162344; padding: 10pt 14pt; border-radius: 4pt; }
+.item h3 { color: #2EC4B6; font-size: 13pt; margin: 0 0 4pt 0; }
+.item .dur { color: #8899AA; font-size: 10pt; margin: 0 0 4pt 0; }
+.item .pat { color: #E76F51; font-size: 10pt; margin: 0; line-height: 1.4; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="accent-bar"></div>
+  <h2>6 类告警音 — 周期结构与特征</h2>
+</div>
+<div class="grid">
+  <div class="item"><h3>ACC</h3><p class="dur">周期 750ms</p><p class="pat">3 x 250ms 脉冲（125ms响/125ms停）</p></div>
+  <div class="item"><h3>Caution1</h3><p class="dur">周期 500ms</p><p class="pat">500ms 持续高能量纯音</p></div>
+  <div class="item"><h3>Caution2</h3><p class="dur">周期 1000ms</p><p class="pat">500ms 响 + 500ms 停</p></div>
+  <div class="item"><h3>Dooropen</h3><p class="dur">周期 750ms</p><p class="pat">500ms 高位 + 250ms 低位</p></div>
+  <div class="item"><h3>FCW</h3><p class="dur">周期 750ms</p><p class="pat">3 x 250ms 脉冲（与 ACC 节奏相同，频率不同）</p></div>
+  <div class="item"><h3>FEB</h3><p class="dur">周期 720ms</p><p class="pat">3 x 240ms 脉冲（120ms响/120ms停）</p></div>
+</div>
+<p style="color: #8899AA; font-size: 11pt; margin: 4pt 48pt;">关键区分点：ACC/FCW/FEB 都是脉冲型，靠频率区分；Caution1/Caution2 响的部分相同，靠"是否有停"区分。纯频谱不够，必须有时序建模。</p>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #0F1B33; font-family: Arial, sans-serif; display: flex; flex-direction: column;
+}
+.header { margin: 24pt 48pt 0 48pt; }
+.accent-bar { width: 50pt; height: 3pt; background: #2EC4B6; margin: 0 0 8pt 0; }
+h2 { color: #FFFFFF; font-size: 24pt; margin: 0; }
+.row { display: flex; margin: 12pt 48pt; gap: 16pt; }
+.col { flex: 1; }
+.box { background: #162344; padding: 10pt 14pt; margin-bottom: 8pt; border-radius: 4pt; }
+.box h3 { color: #2EC4B6; font-size: 12pt; margin: 0 0 4pt 0; }
+.box p { color: #B0C0D0; font-size: 9pt; margin: 0 0 2pt 0; line-height: 1.5; }
+.metrics { background: #1A3050; padding: 10pt 14pt; margin: 8pt 48pt; border-radius: 4pt; }
+.metrics h3 { color: #E76F51; font-size: 12pt; margin: 0 0 6pt 0; }
+.highlight { background: #1A3050; padding: 10pt 14pt; margin: 0 48pt; border-radius: 4pt; }
+.highlight p { color: #2EC4B6; font-size: 11pt; margin: 0; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="accent-bar"></div>
+  <h2>最终成果 & 总结</h2>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="box"><h3>模型指标（合成验证）</h3><p>Macro F1：0.92-0.96</p><p>Caution1：0.975 / Caution2：0.83 / ACC：0.95 / Dooropen：0.93</p><p>FCW：0.96 / FEB：0.99 / LDW：0.98 / BSW：0.93</p></div>
+    <div class="box"><h3>真实验证（real_val）</h3><p>6/7 真实文件识别通过</p><p>连续告警计数修复后 FEB 1→12、ACC 1→10</p><p>Caution2 在 test_01.wav 正确检测 2 次</p></div>
+    <div class="box"><h3>推理性能</h3><p>CPU：10s 音频 ≈ 5-10 秒推理时间</p><p>时间分辨率：0.1s（滑动步长）</p><p>支持连续/离散双模式自动切换</p></div>
+  </div>
+  <div class="col">
+    <div class="box"><h3>项目文件结构</h3><p>src/config.py — 全局配置</p><p>src/data_loader.py — 音频加载/目录发现</p><p>src/augment.py — 模板铺放增强</p><p>src/dataset.py — PyTorch Dataset</p><p>src/model.py — CNN/CRNN 模型</p><p>src/features.py — Mel 频谱提取</p><p>src/train.py — 训练/验证/微调</p><p>src/infer.py — 推理/响铃检测</p><p>data/alarms/ — 告警素材</p><p>data/noise/ — 噪声素材</p><p>data/real_val/ — 真实验证集</p></div>
+  </div>
+</div>
+<div class="metrics">
+  <h3>技术栈</h3>
+</div>
+<div class="highlight">
+  <p><b>训练：</b>PyTorch + Librosa + SoundFile + scikit-learn  |  <b>推理：</b>PyTorch + SciPy (find_peaks) + Librosa  |  <b>架构：</b>CNN 骨干 (4层Conv) + 双向 GRU (2层×128) + 分类头 (256→64→8)  |  <b>数据：</b>模板铺放法 + Mel 频谱 (128×54) + 多热标签  |  <b>评估：</b>合成验证 F1 + 真实验证准确率 + Per-class 报告</p>
+</div>
+</body>
+</html>

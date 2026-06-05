@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #0F1B33; font-family: Arial, sans-serif; display: flex; flex-direction: column;
+}
+.header { margin: 24pt 48pt 0 48pt; }
+.accent-bar { width: 50pt; height: 3pt; background: #2EC4B6; margin: 0 0 8pt 0; }
+h2 { color: #FFFFFF; font-size: 24pt; margin: 0; }
+.flow { display: flex; margin: 12pt 48pt; gap: 12pt; align-items: center; }
+.step { flex: 1; background: #162344; padding: 12pt 14pt; text-align: center; border-radius: 4pt; }
+.step h3 { color: #2EC4B6; font-size: 12pt; margin: 0 0 4pt 0; }
+.step p { color: #B0C0D0; font-size: 9pt; margin: 0; line-height: 1.4; }
+.arrow { color: #E76F51; font-size: 22pt; margin: 0; }
+.detail { margin: 8pt 48pt; display: flex; gap: 16pt; }
+.box { flex: 1; background: #1A3050; padding: 12pt 14pt; }
+.box h3 { color: #E76F51; font-size: 12pt; margin: 0 0 6pt 0; }
+.box p { color: #B0C0D0; font-size: 10pt; margin: 0 0 3pt 0; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="accent-bar"></div>
+  <h2>数据管线</h2>
+</div>
+<div class="flow">
+  <div class="step"><h3>data/alarms/</h3><p>纯净单周期模板 + 手动录制音频（告警+TTS）<br/>目录名=类名，文件名任意</p></div>
+  <p class="arrow">→</p>
+  <div class="step"><h3>data/noise/</h3><p>背景噪声 / 纯TTS / 发动机声 / 人声<br/>作为噪声池和负样本</p></div>
+  <p class="arrow">→</p>
+  <div class="step"><h3>data_loader.py</h3><p>自动扫描目录<br/>重采样 22kHz<br/>归一化</p></div>
+  <p class="arrow">→</p>
+  <div class="step"><h3>augment.py</h3><p>模板铺放合成<br/>1.2s 窗口<br/>加随机 SNR 噪声</p></div>
+  <p class="arrow">→</p>
+  <div class="step"><h3>features.py</h3><p>Mel 频谱图<br/>128 频带 × 54 帧</p></div>
+</div>
+<div class="detail">
+  <div class="box">
+    <h3>增强策略（模板铺放法）</h3>
+    <p>60% 单告警：完整周期随机位移铺入 1.2s 窗口</p>
+    <p>20% 双告警：两个周期在不同位置，可能重叠</p>
+    <p>20% 纯噪声：从噪声池随机截取</p>
+    <p>每个样本混入随机 SNR (-5~+20dB) 的背景噪声</p>
+  </div>
+  <div class="box">
+    <h3>真实验证集 （data/real_val/）</h3>
+    <p>不参与训练，仅评估真实表现</p>
+    <p>labels.txt: 文件名=类1,类2,...</p>
+    <p>每个 epoch 自动推理 + 报告准确率</p>
+    <p>防止合成验证集虚高导致的错误判断</p>
+  </div>
+</div>
+</body>
+</html>

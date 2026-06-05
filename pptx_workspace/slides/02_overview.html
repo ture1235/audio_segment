@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #0F1B33; font-family: Arial, sans-serif; display: flex; flex-direction: column;
+}
+.header { margin: 32pt 48pt 0 48pt; }
+.accent-bar { width: 50pt; height: 3pt; background: #2EC4B6; margin: 0 0 12pt 0; }
+h2 { color: #FFFFFF; font-size: 28pt; margin: 0; }
+.row { display: flex; margin: 20pt 48pt; gap: 24pt; }
+.card { flex: 1; background: #162344; border-left: 4pt solid #2EC4B6; padding: 18pt; }
+.card h3 { color: #2EC4B6; font-size: 15pt; margin: 0 0 8pt 0; }
+.card p { color: #B0C0D0; font-size: 11pt; margin: 0; line-height: 1.6; }
+.goal { margin: 8pt 48pt 30pt 48pt; background: #1A3050; padding: 16pt 20pt; }
+.goal p { color: #E76F51; font-size: 13pt; margin: 0; }
+.goal b { color: #FFFFFF; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="accent-bar"></div>
+  <h2>项目概述</h2>
+</div>
+<div class="row">
+  <div class="card">
+    <h3>输入</h3>
+    <p>车载麦克风录制的单声道音频（10-30s），可能包含多种告警音叠加、TTS 语音、行驶噪声</p>
+  </div>
+  <div class="card">
+    <h3>输出</h3>
+    <p>检测到哪几种告警音、各自在哪些时间段响了、一共响了多少次（每次响铃的时间点）</p>
+  </div>
+  <div class="card">
+    <h3>场景</h3>
+    <p>实时车载环境：单个告警、多告警同时重叠、告警+TTS 叠加、不同音量距离</p>
+  </div>
+</div>
+<div class="goal">
+  <p><b>核心目标：</b>从 6 类纯净单周期模板出发，仅用少量手动录制音频，训练一个能处理重叠告警、区分节奏差异、抗噪声干扰的鲁棒分类器。</p>
+</div>
+</body>
+</html>

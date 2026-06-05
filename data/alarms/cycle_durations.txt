@@ -1,0 +1,13 @@
+# Alarm cycle durations (seconds)
+# Format: CLASS_NAME=DURATION
+# One line per alarm class.  Lines starting with # are ignored.
+# If a class is not listed here, cycle counting is disabled for it.
+
+ACC=0.75
+BSW=0.50
+Caution1=0.50
+Caution2=1.00
+Dooropen=0.75
+FCW=0.75
+FEB=0.72
+LDW=0.45
